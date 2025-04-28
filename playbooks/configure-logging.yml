@@ -1,0 +1,15 @@
+---
+# Playbook for configuring system logging
+- name: "Configure Logging"
+  hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: true
+  
+  tasks:
+    - name: "Configure Logging"
+      include_role:
+        name: configure-logging
+      tags:
+        - logging
+        - config 

@@ -1,0 +1,15 @@
+---
+# Playbook for customizing terminal appearance and functionality
+- name: "Customize Terminal"
+  hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: true
+  
+  tasks:
+    - name: "Customize Terminal"
+      include_role:
+        name: customize-terminal
+      tags:
+        - terminal
+        - customization 

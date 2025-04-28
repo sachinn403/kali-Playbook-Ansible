@@ -1,0 +1,36 @@
+---
+# Common variables for all hosts
+
+# General configuration
+kali_mode: true  # Set to true for Kali Linux systems
+enable_logging: true  # Enable advanced logging
+configure_tmux: true  # Configure tmux
+customize_terminal: true  # Customize terminal appearance
+customize_browser: true  # Customize browser settings
+
+# Tool installation options
+install_tools: true  # Master toggle for tool installation
+skip_duplicate_check: false  # Skip checking for duplicate tools
+
+# Specific tool installation flags
+skip_nuclei: false  # Skip nuclei installation if already present
+skip_httpx: false  # Skip httpx installation if already present
+skip_ffuf: false  # Skip ffuf installation if already present
+skip_bloodhound: false  # Skip BloodHound installation if already present
+
+# Visual Studio Code configuration
+install_vscode: true  # Install Visual Studio Code
+vscode_extensions:
+  - streetsidesoftware.code-spell-checker
+  - ms-python.python
+  - DEVSENSE.phptools-vscode
+  - GitHub.copilot
+  - snyk-security.snyk-vulnerability-scanner
+
+# System configuration
+configure_system: true  # Configure system settings
+system_hostname: "kali-pentest"  # Default hostname (can be overridden in host_vars)
+timezone: "UTC"  # Default timezone
+
+# Custom paths
+tools_base_path: /opt  # Base path for tool installation 

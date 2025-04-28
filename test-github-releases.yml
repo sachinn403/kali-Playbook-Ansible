@@ -1,0 +1,24 @@
+---
+# Test playbook for GitHub releases downloader
+- name: Test GitHub Releases Downloader
+  hosts: localhost
+  become: false
+  gather_facts: true
+  roles:
+    - role: install-tools
+      tags: [github-releases]
+  
+  vars:
+    security_tools_to_install:
+      - web
+      - active_directory
+      - cloud
+    skip_duplicate_check: true
+    install_recon: false
+    install_c2: false
+    install_windows_binaries: false
+    install_utilities: false
+    install_mobile: false
+    install_iot: false
+    install_reverse_shell: false
+    install_misc: false 

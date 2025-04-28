@@ -1,0 +1,74 @@
+---
+# Playbook for installing penetration testing tools
+- name: "Install Penetration Testing Tools"
+  hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: true
+  
+  tasks:
+    - name: "Check for duplicate tools"
+      include_role:
+        name: install-tools
+        tasks_from: check-duplicates.yml
+      when: not skip_duplicate_check | default(false)
+      tags:
+        - tools
+        - check
+    
+    - name: "Install APT packages"
+      include_role:
+        name: install-tools
+        tasks_from: apt-stuff.yml
+      tags:
+        - tools
+        - apt
+    
+    - name: "Install Kerbrute"
+      include_role:
+        name: install-tools
+        tasks_from: kerbrute.yml
+      tags:
+        - tools
+        - kerbrute
+    
+    - name: "Install GitHub repositories"
+      include_role:
+        name: install-tools
+        tasks_from: github-repos.yml
+      tags:
+        - tools
+        - github
+    
+    - name: "Install Go tools"
+      include_role:
+        name: install-tools
+        tasks_from: go-tools.yml
+      tags:
+        - tools
+        - go
+    
+    - name: "Install Python tools"
+      include_role:
+        name: install-tools
+        tasks_from: python-tools.yml
+      tags:
+        - tools
+        - python
+    
+    - name: "Install Ruby Gems"
+      include_role:
+        name: install-tools
+        tasks_from: gem-tools.yml
+      tags:
+        - tools
+        - ruby
+    
+    - name: "Install BloodHound"
+      include_role:
+        name: install-tools
+        tasks_from: bloodhound.yml
+      when: not skip_bloodhound | default(false)
+      tags:
+        - tools
+        - bloodhound 

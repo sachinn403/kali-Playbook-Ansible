@@ -1,0 +1,82 @@
+---
+# Main playbook that includes all other playbooks
+- name: "Kali Linux for Advanced Penetration Testing"
+  hosts: all
+  become: true
+  become_method: sudo
+  any_errors_fatal: false
+  ignore_errors: "{{ lookup('env', 'ANSIBLE_IGNORE_ERRORS') | default(false, true) | bool }}"
+  gather_facts: true
+  
+  pre_tasks:
+    - name: Include OS-specific variables
+      include_vars: "{{ item }}"
+      with_first_found:
+        - "group_vars/{{ ansible_os_family | lower }}.yml"
+        - "group_vars/all/main.yml"
+      tags: always
+    
+    - name: Check if running on Kali Linux
+      set_fact:
+        kali_mode: true
+      when: ansible_distribution == "Kali" or ansible_distribution == "Debian"
+      tags: always
+      
+  tasks:
+    - name: Include tools installation playbook
+      include_tasks: install-tools.yml
+      when: install_tools | default(true)
+      tags: 
+        - tools
+        - setup
+    
+    - name: Include system configuration playbook
+      include_tasks: configure-system.yml
+      when: configure_system | default(true)
+      tags: 
+        - system
+        - setup
+    
+    - name: Include terminal customization playbook
+      include_tasks: customize-terminal.yml
+      when: customize_terminal | default(true)
+      tags: 
+        - terminal
+        - customization
+    
+    - name: Include browser customization playbook
+      include_tasks: customize-browser.yml
+      when: customize_browser | default(true)
+      tags: 
+        - browser
+        - customization
+    
+    - name: Include logging configuration playbook
+      include_tasks: configure-logging.yml
+      when: enable_logging | default(true)
+      tags: 
+        - logging
+        - config
+    
+    - name: Include tmux configuration playbook
+      include_tasks: configure-tmux.yml
+      when: configure_tmux | default(true)
+      tags: 
+        - tmux
+        - config
+  
+  roles:
+    - role: gantsign.visual-studio-code
+      when: install_vscode | default(true)
+      users:
+        - username: "{{ ansible_user_id }}" 
+          visual_studio_code_extensions: "{{ vscode_extensions | default([]) }}"
+      tags:
+        - vscode
+        - editor
+  
+  post_tasks:
+    - name: Display completion message
+      debug:
+        msg: "Setup completed successfully! Your Kali system is now configured for penetration testing."
+      tags: always 

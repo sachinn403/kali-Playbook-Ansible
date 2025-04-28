@@ -1,0 +1,15 @@
+---
+# Playbook for configuring tmux
+- name: "Configure Tmux"
+  hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: true
+  
+  tasks:
+    - name: "Configure Tmux"
+      include_role:
+        name: configure-tmux
+      tags:
+        - tmux
+        - config 

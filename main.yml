@@ -1,0 +1,26 @@
+---
+- name: "Customizing Kali Linux for Senior Penetration Testing"
+  hosts: localhost
+  connection: local
+  vars:
+    kali_mode: true  # Custom variable to allow role tasks to adapt for Kali
+  any_errors_fatal: false
+  ignore_errors: true
+  roles:
+    - role: "roles/install-tools"
+    - role: "roles/configure-tmux"
+    - role: "roles/customize-terminal"
+    - role: "roles/customize-browser"
+    - role: "roles/configure-logging"
+    - role: "roles/configure-system"
+    - role: gantsign.visual-studio-code
+      users:
+        - username: "{{ ansible_user_id }}" 
+          visual_studio_code_extensions:
+            - streetsidesoftware.code-spell-checker
+            - ms-python.python
+            - DEVSENSE.phptools-vscode
+            - GitHub.copilot
+            - snyk-security.snyk-vulnerability-scanner
+# This playbook is now adapted for Kali Linux. All tool installations and configurations are tailored for a senior-level pentester's workflow.
+

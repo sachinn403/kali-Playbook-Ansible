@@ -1,0 +1,11 @@
+---
+# External role dependencies
+roles:
+  - name: gantsign.visual-studio-code
+    version: 6.7.0  # Use a specific version for stability
+
+collections:
+  - name: community.general
+    version: 7.0.0
+  - name: ansible.posix
+    version: 1.5.1

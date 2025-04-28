@@ -1,0 +1,15 @@
+---
+# Playbook for configuring system settings
+- name: "Configure System Settings"
+  hosts: all
+  become: true
+  become_method: sudo
+  gather_facts: true
+  
+  tasks:
+    - name: "Configure System Settings"
+      include_role:
+        name: configure-system
+      tags:
+        - system
+        - config 
